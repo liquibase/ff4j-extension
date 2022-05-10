@@ -1,1 +1,1 @@
-com.example.precondition.HasPasswordColumnPrecondition
+org.liquibase.ext.precondition.FF4JFeatureFlagPrecondition

@@ -42,4 +42,4 @@ databaseChangeLog:
 ```
 
 ## Feedback and Issues
-Please submit all feedback and issues to [this idea board](https://ideas.liquibase.com/c/71-ff47-feature-flags-extensions).
+Please submit all feedback and issues to [this idea board](https://ideas.liquibase.com/c/71-ff4j-feature-flags-extensions).

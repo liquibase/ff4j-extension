@@ -7,45 +7,9 @@ on:
   schedule:
     - cron: "5 6 * * *"
   workflow_dispatch:
-  workflow_call:
-    secrets:
-      SNYK_TOKEN:
-        description: 'SNYK_TOKEN from the caller workflow'
-        required: true
 
 jobs:
   security-scan:
-    name: Snyk Security Scan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Master Branch
-        uses: actions/checkout@v2
-
-      - name: Run Snyk Test to check for vulnerabilities
-        id: test
-        uses: snyk/actions/maven-3-jdk-11@master
-        timeout-minutes: 10
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: --fail-on=all --severity-threshold=medium --all-projects --org=datical
-
-      - name: Run Snyk Monitor
-        uses: snyk/actions/maven-3-jdk-11@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor
-          args: -p --all-projects --org=datical
-
-      - name: Send Slack Message (Failure)
-        if: ${{ failure() }}
-        uses: archive/github-actions-slack@v2.0.0
-        with:
-          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_API_TOKEN }}
-          slack-channel: liquibase-labs
-          slack-text: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} : ${{ job.status }} @here"
-          slack-optional-link_names: true
-          slack-optional-username: Liquibot
-          slack-optional-icon_emoji: ':liquibase:'
+    uses: liquibase/build-logic/.github/workflows/synk-nightly.yml@main
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

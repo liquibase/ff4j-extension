@@ -8,6 +8,10 @@ on:
     - cron: "5 6 * * *"
   workflow_dispatch:
   workflow_call:
+    secrets:
+      SNYK_TOKEN:
+        description: 'SNYK_TOKEN from the caller workflow'
+        required: true
 
 jobs:
   security-scan:
